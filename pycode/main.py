@@ -5,6 +5,17 @@ Created on Mar 4, 2017
 '''
 
 import speech_recognition as sr
+import re
+
+def match_result(pattern, order):
+    """
+    this function will check if our pattern is matched or not
+    """
+    s = re.match(pattern, order)
+    if s:
+        return 1
+    else:
+        return 0
 
 def decide(order):
     """
@@ -32,6 +43,8 @@ def decide(order):
 
 if __name__ == '__main__':
     
+    orders = ["forward", "backward", "stop", "left", "right"] 
+    
     #Getting audio from microphone
     engine = sr.Recognizer()
     with sr.Microphone() as source:
@@ -39,14 +52,9 @@ if __name__ == '__main__':
         audio = engine.listen(source)
     
     #Recognising speech and deciding
-    try:
-        b = engine.recognize_sphinx(audio)
-        decide(b)
-        #print("I think you said: {}".format(b))
-              
-    except sr.UnknownValueError:
-        print("I coudn't understand you!")    
-    
-
-
+    t = engine.recognize_sphinx(audio)
+    for i in orders:
+        if match_result("fo", i):
+            decide(i)
+            break
     
