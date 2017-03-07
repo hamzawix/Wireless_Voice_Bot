@@ -8,15 +8,12 @@ import speech_recognition as sr
 import re
 
 def match_result(pattern, order):
-    """
-    this function will check if our pattern is matched or not
-    """
-    s = re.match(pattern, order)
-    if s:
-        return 1
+   
+    if re.match(pattern, order):
+        return True
     else:
-        return 0
-
+        return False
+    
 def decide(order):
     """
     This is a function that takes the returned text from the recognizer
@@ -43,7 +40,9 @@ def decide(order):
 
 if __name__ == '__main__':
     
-    orders = ["forward", "backward", "stop", "left", "right"] 
+    #A dictionary for our regular expression patterns
+    regex_dict = {r"^fo": "forward", r"(ba|th)": "backward", r"(st|o|it|th)": "stop"
+                  , r"(ye|le)": "left", r"(ri|al|so)": "right"}
     
     #Getting audio from microphone
     engine = sr.Recognizer()
@@ -53,8 +52,12 @@ if __name__ == '__main__':
     
     #Recognising speech and deciding
     t = engine.recognize_sphinx(audio)
-    for i in orders:
-        if match_result("fo", i):
-            decide(i)
+    for i in regex_dict:
+        if match_result(i, t):
+            decide(regex_dict[i])
             break
+        else: pass
+            
+            
+    
     
