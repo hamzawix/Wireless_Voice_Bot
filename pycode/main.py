@@ -1,11 +1,9 @@
-'''
-Created on Mar 4, 2017
-
-@author: hamzawix
-'''
 
 import speech_recognition as sr
 import re
+import serial
+
+usb = serial.Serial('/dev/ttyACM0', 9600)
 
 def match_result(pattern, order):
    
@@ -13,26 +11,28 @@ def match_result(pattern, order):
         return True
     else:
         return False
-    
+
 def decide(order):
-    """
-    This is a function that takes the returned text from the recognizer
-    as an argument and decides where the robot should go.
-    """
+   
     if order == "stop":
-        print("stoping")
+        print('stopping')
+        usb.write(b's')
         
     elif order == "forward":
         print("going forward")
+        usb.write(b'f')
         
     elif order == "backward":
         print("going backward")
+        usb.write(b'b')
         
     elif order == "left":
         print("turning left")
+        usb.write(b'l')
         
     elif order == "right":
         print("turning right")
+        usb.write(b'r')
         
     else:
         print("I did not understand")
