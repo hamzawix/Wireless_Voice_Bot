@@ -40,17 +40,17 @@ def decide(order):
 
 if __name__ == '__main__':
     
-    #A dictionary for our regular expression patterns
+    #Un dictionnaire pour nos modèles d'expression régulière
     regex_dict = {r"^fo": "forward", r"(ba|th)": "backward", r"(st|o|it|th)": "stop"
                   , r"(ye|le)": "left", r"(ri|al|so)": "right"}
     
-    #Getting audio from microphone
+    #Obtenir de l'audio du microphone
     engine = sr.Recognizer()
     with sr.Microphone() as source:
         print("Command me!")
         audio = engine.listen(source)
     
-    #Recognising speech and deciding
+    #Reconnaissant le discours et la décision
     t = engine.recognize_sphinx(audio)
     for i in regex_dict:
         if match_result(i, t):
