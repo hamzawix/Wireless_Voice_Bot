@@ -2,8 +2,10 @@
 import speech_recognition as sr
 import re
 import serial
-
-usb = serial.Serial('/dev/ttyACM0', 9600)
+try:
+    usb = serial.Serial('/dev/ttyACM1', 9600)
+except:
+    usb = serial.Serial('/dev/ttyACM0', 9600)
 
 def match_result(pattern, order):
    
